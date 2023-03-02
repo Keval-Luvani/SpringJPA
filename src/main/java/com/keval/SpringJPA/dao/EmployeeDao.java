@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.keval.SpringJPA.model.Employee;
+import com.keval.SpringJPA.model.Skill;
 
 @Component
 public class EmployeeDao {
@@ -41,6 +43,12 @@ public class EmployeeDao {
 	}
 
 	public void updateEmployee(Employee employee) {
+		List<Skill> skillList =  skillRepository.findByEmployee(employee);
 		employeeRepository.save(employee);
+		deleteskill(skillList);
+	}
+
+	public void deleteskill(List<Skill> skillList) {
+			skillRepository.deleteAll(skillList);
 	}
 }

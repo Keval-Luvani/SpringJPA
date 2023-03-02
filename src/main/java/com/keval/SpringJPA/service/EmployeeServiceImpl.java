@@ -32,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public void createEmployee(Employee employee) {
 		List<Skill> skillList = new ArrayList<>();
+		employee.setSkill(null);	
 		for(String skill: employee.getSkillList()) {
 			Skill tempSkill = new Skill();
 			tempSkill.setEmployee(employee);
