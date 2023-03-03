@@ -15,6 +15,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	EmployeeDao employeeDaoImpl;
 	
+	@Autowired
+	SkillService skillServiceImpl;
+	
 	public Employee fetchData(int employeeId) {
 		Employee employee = employeeDaoImpl.getEmployee(employeeId);
         return employee;
@@ -45,15 +48,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public void updateEmployee(Employee employee) {
-		List<Skill> skillList = new ArrayList<>();
-		for(String skill: employee.getSkillList()) {
-			Skill tempSkill = new Skill();
-			tempSkill.setEmployee(employee);
-			tempSkill.setSkill(skill);
-			skillList.add(tempSkill);
-		}
-		employee.setSkill(skillList);
+		List<Skill> addSkillList = skillServiceImpl.updateSkill(employee);
+		employee.setSkill(addSkillList);
 		employeeDaoImpl.updateEmployee(employee);
-		return;
+		skillServiceImpl.deleteSkill();
 	}
 }	

@@ -9,15 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.keval.SpringJPA.model.Employee;
-import com.keval.SpringJPA.model.Skill;
 
 @Component
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Autowired
 	EmployeeRepository employeeRepository;
-	@Autowired
-	SkillRepository skillRepository;
 	
 	public List<Employee> getEmployees() {
 		List<Employee> employeeList = new ArrayList<>();
@@ -43,13 +40,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		employeeRepository.deleteById(employeeId);
 	}
 
-	public void updateEmployee(Employee employee) {
-		List<Skill> databaseSkillList = skillRepository.findByEmployee(employee);	
+	public void updateEmployee(Employee employee) {	
 		employeeRepository.save(employee);
-		deleteSkills(databaseSkillList);
-	}
-	
-	public void deleteSkills(List<Skill> deleteskillList) {
-			skillRepository.deleteAll(deleteskillList);
 	}
 }
